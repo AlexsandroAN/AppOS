@@ -5,13 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="br.com.dae.appos.MainActivity"
-    tools:showIn="@layout/activity_main">
+    tools:context="br.com.dae.appos.CadastroClienteActivity"
+    tools:showIn="@layout/activity_cadastro_cliente">
 
-    <Button
-        android:id="@+id/btCadastrarCliente"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Cadastrar Cliente"/>
 
 </android.support.constraint.ConstraintLayout>
