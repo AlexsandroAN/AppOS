@@ -10,10 +10,12 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button btnCadastrarCliente;
+    private Button btnListarClientes;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,14 +29,14 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
 
 
-        btnCadastrarCliente = (Button) findViewById(R.id.btCadastrarCliente);
+        btnListarClientes = (Button) findViewById(R.id.btnListaClientes);
 
-        btnCadastrarCliente.setOnClickListener(new View.OnClickListener() {
+        btnListarClientes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, CadastroClienteActivity.class);
+                Intent intent = new Intent(MainActivity.this, ListarClientesActivity.class);
                 startActivity(intent);
-                finish();
+               // finish();
             }
         });
 

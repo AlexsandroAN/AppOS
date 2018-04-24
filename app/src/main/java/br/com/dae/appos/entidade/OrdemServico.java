@@ -6,7 +6,7 @@ import java.util.Date;
 /**
  * Created by 39091 on 11/07/2016.
  */
-public class OS implements Serializable {
+public class OrdemServico implements Serializable {
 
     private int id;
 
@@ -14,7 +14,7 @@ public class OS implements Serializable {
 
     private TipoServico tipoServico;
 
-    private StatusOS statusOS;
+    private StatusOrdemServico statusOS;
 
     private Date dataInicio;
 
@@ -48,11 +48,11 @@ public class OS implements Serializable {
         this.tipoServico = tipoServico;
     }
 
-    public StatusOS getStatusOS() {
+    public StatusOrdemServico getStatusOS() {
         return statusOS;
     }
 
-    public void setStatusOS(StatusOS statusOS) {
+    public void setStatusOS(StatusOrdemServico statusOS) {
         this.statusOS = statusOS;
     }
 

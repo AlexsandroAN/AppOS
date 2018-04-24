@@ -9,7 +9,7 @@
     tools:showIn="@layout/activity_main">
 
     <Button
-        android:id="@+id/btCadastrarCliente"
+        android:id="@+id/btnListaClientes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Cadastrar Cliente"/>

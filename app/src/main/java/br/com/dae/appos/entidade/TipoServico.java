@@ -39,11 +39,7 @@ public class TipoServico implements Serializable {
 
     @Override
     public String toString() {
-        return "TipoServico{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                ", descricao='" + descricao + '\'' +
-                '}';
+        return nome.toString();
     }
 }
 

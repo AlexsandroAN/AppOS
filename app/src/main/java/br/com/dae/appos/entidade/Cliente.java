@@ -12,11 +12,13 @@ public class Cliente implements Serializable {
 
     private String nome;
 
+    private String descricao;
+
     private String endereco;
 
     private String email;
 
-    private String contato;
+    private String telefone;
 
     public int getId() {
         return id;
@@ -32,6 +34,14 @@ public class Cliente implements Serializable {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
     public String getEndereco() {
@@ -50,25 +60,18 @@ public class Cliente implements Serializable {
         this.email = email;
     }
 
-    public String getContato() {
-        return contato;
+    public String getTelefone() {
+        return telefone;
     }
 
-    public void setContato(String contato) {
-        this.contato = contato;
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
     }
 
     @Override
     public String toString() {
-        return "Cliente{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                ", endereco='" + endereco + '\'' +
-                ", email='" + email + '\'' +
-                ", contato='" + contato + '\'' +
-                '}';
+        return nome.toString();
     }
-
 }
 
 
