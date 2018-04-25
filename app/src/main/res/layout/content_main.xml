@@ -8,10 +8,18 @@
     tools:context="br.com.dae.appos.MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <Button
+    <!--<Button
         android:id="@+id/btnListaClientes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Cadastrar Cliente"/>
+        android:text="Listar Cliente"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="55dp" />-->
+
+    <Button
+        android:id="@+id/btnListaTipoSercivo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Listar Tipo Serviço"/>
 
 </android.support.constraint.ConstraintLayout>
