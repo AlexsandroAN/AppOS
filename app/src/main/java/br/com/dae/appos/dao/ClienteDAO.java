@@ -7,9 +7,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import br.com.dae.appos.entidade.Cliente;
+import br.com.dae.appos.Util.Constantes;
 
 /**
  * Created by 39091 on 23/04/2018.
@@ -17,20 +17,19 @@ import br.com.dae.appos.entidade.Cliente;
 
 public class ClienteDAO extends SQLiteOpenHelper {
 
-    private static final String DATABASE = "bdappOS";
-    private static final int VERSION = 1;
+//    private static final String DATABASE = "bd_appOS";
+//    private static final int VERSION = 1;
 
 
     public ClienteDAO(Context context) {
-        super(context, DATABASE, null, VERSION);
+        super(context, Constantes.BD_NOME, null, Constantes.BD_VERSAO);
     }
-
 
     @Override
     public void onCreate(SQLiteDatabase db) {
 
         StringBuilder query = new StringBuilder();
-        query.append("CREATE TABLE cliente (");
+        query.append("CREATE TABLE tb_cliente (");
         query.append(" id INTEGER PRIMARY KEY AUTOINCREMENT,");
         query.append(" nome TEXT(50) NOT NULL,");
         query.append(" descricao TEXT(100),");
@@ -43,15 +42,12 @@ public class ClienteDAO extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        onCreate(db);
-
-//        String produto = "DROP TABLE IF EXISTS clientes";
-//        db.execSQL(produto);
+        String cliente = "DROP TABLE IF EXISTS tb_cliente";
+        db.execSQL(cliente);
     }
 
     // Método para salvar cliente
-    public void salvarCliente(Cliente cliente){
-
+    public void salvarCliente(Cliente cliente) {
         ContentValues values = new ContentValues();
 
         values.put("nome", cliente.getNome());
@@ -61,12 +57,10 @@ public class ClienteDAO extends SQLiteOpenHelper {
         values.put("telefone", cliente.getTelefone());
 
         SQLiteDatabase db = this.getWritableDatabase();
-
-        db.insert("cliente", null, values);
-
+        db.insert("tb_cliente", null, values);
     }
 
-    public void alterarCliente(Cliente cliente){
+    public void alterarCliente(Cliente cliente) {
         ContentValues values = new ContentValues();
 
         values.put("nome", cliente.getNome());
@@ -75,31 +69,23 @@ public class ClienteDAO extends SQLiteOpenHelper {
         values.put("email", cliente.getEmail());
         values.put("telefone", cliente.getTelefone());
 
-
-        getWritableDatabase().update("cliente", values, "id = ?", new String[]{String.valueOf(cliente.getId())});
+        getWritableDatabase().update("tb_cliente", values, "id = ?", new String[]{String.valueOf(cliente.getId())});
     }
 
-    public void deletarCliente(Cliente cliente){
-
-        getWritableDatabase().delete("cliente", "id = ?", new String[]{String.valueOf(cliente.getId())});
+    public void deletarCliente(Cliente cliente) {
+        getWritableDatabase().delete("tb_cliente", "id = ?", new String[]{String.valueOf(cliente.getId())});
     }
 
     // Método para listar todos os clientes
     public ArrayList<Cliente> getLista() {
-
-       // String columns = {"id", "nomeCliente", "descricaoCliente", "enderecoCliente", "emailCliente", "emailCliente"};
-       // Cursor cursor = getWritableDatabase().query("clientes", columns, null, null, null, null, null, null);
-
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query("cliente", null, null, null, null, null, null);
+        Cursor cursor = db.query("tb_cliente", null, null, null, null, null, null);
 
         ArrayList<Cliente> listaClientes = new ArrayList<Cliente>();
 
         while (cursor.moveToNext()) {
             Cliente cliente = new Cliente();
-
             setPessoaFromCursor(cursor, cliente);
-
             listaClientes.add(cliente);
         }
 
@@ -114,5 +100,4 @@ public class ClienteDAO extends SQLiteOpenHelper {
         cliente.setEmail(cursor.getString(cursor.getColumnIndex("email")));
         cliente.setTelefone(cursor.getString(cursor.getColumnIndex("telefone")));
     }
-
 }

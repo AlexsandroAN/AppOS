@@ -5,10 +5,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
 import java.util.ArrayList;
-
-import br.com.dae.appos.entidade.Cliente;
+import br.com.dae.appos.Util.Constantes;
+import br.com.dae.appos.entidade.TipoServico;
 
 /**
  * Created by 39091 on 23/04/2018.
@@ -16,102 +15,84 @@ import br.com.dae.appos.entidade.Cliente;
 
 public class TipoServicoDAO extends SQLiteOpenHelper {
 
-    private static final String DATABASE = "bdappOS";
-    private static final int VERSION = 1;
-
-
     public TipoServicoDAO(Context context) {
-        super(context, DATABASE, null, VERSION);
+        super(context, Constantes.BD_NOME, null, Constantes.BD_VERSAO);
     }
-
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-
         StringBuilder query = new StringBuilder();
-        query.append("CREATE TABLE cliente (");
+        query.append("CREATE TABLE tb_tipo_servico (");
         query.append(" id INTEGER PRIMARY KEY AUTOINCREMENT,");
         query.append(" nome TEXT(50) NOT NULL,");
-        query.append(" descricao TEXT(100),");
-        query.append(" endereco TEXT(100),");
-        query.append(" email TEXT(20),");
-        query.append(" telefone TEXT(20))");
+        query.append(" descricao TEXT(100))");
 
         db.execSQL(query.toString());
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        onCreate(db);
-
-//        String produto = "DROP TABLE IF EXISTS clientes";
-//        db.execSQL(produto);
+        String tipoServico = "DROP TABLE IF EXISTS tb_tipo_servico";
+        db.execSQL(tipoServico);
     }
 
-    // Método para salvar cliente
-    public void salvarCliente(Cliente cliente){
-
+    public void salvarTipoServico(TipoServico tipoServico){
         ContentValues values = new ContentValues();
 
-        values.put("nome", cliente.getNome());
-        values.put("descricao", cliente.getDescricao());
-        values.put("endereco", cliente.getEndereco());
-        values.put("email", cliente.getEmail());
-        values.put("telefone", cliente.getTelefone());
+        values.put("nome", tipoServico.getNome());
+        values.put("descricao", tipoServico.getDescricao());
 
         SQLiteDatabase db = this.getWritableDatabase();
 
-        db.insert("cliente", null, values);
-
+        db.insert("tb_tipo_servico", null, values);
     }
 
-    public void alterarCliente(Cliente cliente){
+    public void alterarTipoServico(TipoServico tipoServico){
         ContentValues values = new ContentValues();
 
-        values.put("nome", cliente.getNome());
-        values.put("descricao", cliente.getDescricao());
-        values.put("endereco", cliente.getEndereco());
-        values.put("email", cliente.getEmail());
-        values.put("telefone", cliente.getTelefone());
+        values.put("nome", tipoServico.getNome());
+        values.put("descricao", tipoServico.getDescricao());
 
-
-        getWritableDatabase().update("cliente", values, "id = ?", new String[]{String.valueOf(cliente.getId())});
+        getWritableDatabase().update("tb_tipo_servico", values, "id = ?", new String[]{String.valueOf(tipoServico.getId())});
     }
 
-    public void deletarCliente(Cliente cliente){
-
-        getWritableDatabase().delete("cliente", "id = ?", new String[]{String.valueOf(cliente.getId())});
+    public void deletarTipoServico(TipoServico tipoServico){
+        getWritableDatabase().delete("tb_tipo_servico", "id = ?", new String[]{String.valueOf(tipoServico.getId())});
     }
 
-    // Método para listar todos os clientes
-    public ArrayList<Cliente> getLista() {
-
-       // String columns = {"id", "nomeCliente", "descricaoCliente", "enderecoCliente", "emailCliente", "emailCliente"};
-       // Cursor cursor = getWritableDatabase().query("clientes", columns, null, null, null, null, null, null);
-
+    public ArrayList<TipoServico> getLista() {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query("cliente", null, null, null, null, null, null);
 
-        ArrayList<Cliente> listaClientes = new ArrayList<Cliente>();
+        Cursor cursor = db.query("tb_tipo_servico", null, null, null, null, null, null);
+
+        ArrayList<TipoServico> listaTipoServico = new ArrayList<TipoServico>();
 
         while (cursor.moveToNext()) {
-            Cliente cliente = new Cliente();
+            TipoServico tipoServico = new TipoServico();
 
-            setPessoaFromCursor(cursor, cliente);
-
-            listaClientes.add(cliente);
+            setTipoServicoFromCursor(cursor, tipoServico);
+            listaTipoServico.add(tipoServico);
         }
-
-        return listaClientes;
+        return listaTipoServico;
     }
 
-    private void setPessoaFromCursor(Cursor cursor, Cliente cliente) {
-        cliente.setId(cursor.getInt(cursor.getColumnIndex("id")));
-        cliente.setNome(cursor.getString(cursor.getColumnIndex("nome")));
-        cliente.setDescricao(cursor.getString(cursor.getColumnIndex("descricao")));
-        cliente.setEndereco(cursor.getString(cursor.getColumnIndex("endereco")));
-        cliente.setEmail(cursor.getString(cursor.getColumnIndex("email")));
-        cliente.setTelefone(cursor.getString(cursor.getColumnIndex("telefone")));
+    private void setTipoServicoFromCursor(Cursor cursor, TipoServico tipoServico) {
+        tipoServico.setId(cursor.getInt(cursor.getColumnIndex("id")));
+        tipoServico.setNome(cursor.getString(cursor.getColumnIndex("nome")));
+        tipoServico.setDescricao(cursor.getString(cursor.getColumnIndex("descricao")));
+    }
+
+    public TipoServico consultarTipoServicoPorId(int idTipoServico) {
+        TipoServico tipoServico = new TipoServico();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query("tb_tipo_servico", null, "ID = ?", new String[]{String.valueOf(idTipoServico)}, null, null, "nome");
+
+        if (cursor.moveToNext()) {
+            setTipoServicoFromCursor(cursor, tipoServico);
+        }
+
+        return tipoServico;
     }
 
 }
