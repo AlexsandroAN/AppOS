@@ -6,12 +6,15 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.ContextMenu;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+
+import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +34,7 @@ public class ListarTipoServicoActivity extends AppCompatActivity {
     private TipoServico tipoServico;
     private ArrayAdapter adapter;
     private int posicaoSelecionada;
+    private MaterialSearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +42,8 @@ public class ListarTipoServicoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_listar_tipo_servico);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        searchView = findViewById(R.id.search_view);
 
         getSupportActionBar().setTitle("Lista Tipo Serviço");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -148,12 +154,38 @@ public class ListarTipoServicoActivity extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_pesquisa, menu);
 
+        MenuItem item = menu.findItem(R.id.menuPesquisa);
+        searchView.setMenuItem(item);
+
+        searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                //Do some magic
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter.getFilter().filter(newText);
+                //Do some magic
+                return false;
+            }
+        });
+
+        return true;
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menuPesquisa) {
+            return true;
+        }
         switch (item.getItemId()) {
-            case android.R.id.home:
+            case R.id.menuSair:
                 finish();
                 break;
         }
