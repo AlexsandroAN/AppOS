@@ -62,23 +62,39 @@ public class CadastroTipoServicoActivity extends AppCompatActivity {
         btnPoliform.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 tipoServico.setNome(edtNome.getText().toString());
                 tipoServico.setDescricao(edtDescricao.getText().toString());
 
-                if (btnPoliform.getText().toString().equals("Cadastrar novo Tipo Serviço")) {
-                    tipoServicoDAO.salvarTipoServico(tipoServico);
-                    tipoServicoDAO.close();
-                    Util.showMsgToast(CadastroTipoServicoActivity.this, "Tipo de Serviço salvo com sucesso!");
-                } else {
-                    tipoServicoDAO.close();
-                    tipoServicoDAO.alterarTipoServico(tipoServico);
-                    Util.showMsgToast(CadastroTipoServicoActivity.this, "Tipo de Serviço modificado com sucesso!");
+                if (!validarTipoServico(tipoServico)) {
+                    if (btnPoliform.getText().toString().equals("Cadastrar novo Tipo Serviço")) {
+                        tipoServicoDAO.salvarTipoServico(tipoServico);
+                        tipoServicoDAO.close();
+                        Util.showMsgToast(CadastroTipoServicoActivity.this, "Tipo de Serviço salvo com sucesso!");
+                    } else {
+                        tipoServicoDAO.alterarTipoServico(tipoServico);
+                        tipoServicoDAO.close();
+                        Util.showMsgToast(CadastroTipoServicoActivity.this, "Tipo de Serviço modificado com sucesso!");
+                    }
+                    Intent i = new Intent(CadastroTipoServicoActivity.this, ListarTipoServicoActivity.class);
+                    startActivity(i);
+                    finish();
                 }
-                Intent i = new Intent(CadastroTipoServicoActivity.this, ListarTipoServicoActivity.class);
-                startActivity(i);
-                finish();
             }
         });
+    }
+
+    private boolean validarTipoServico(TipoServico tipoServico) {
+        boolean erro = false;
+        if (tipoServico.getNome() == null || "".equals(tipoServico.getNome())) {
+            erro = true;
+            edtNome.setError("Campo Nome é obrigatório!");
+        }
+//        if (tipoServico.getDescricao() == null || "".equals(tipoServico.getDescricao())) {
+//            erro = true;
+//            edtDescricao.setError("Campo Descrição é obrigatório!");
+//        }
+        return erro;
     }
 
     @Override
