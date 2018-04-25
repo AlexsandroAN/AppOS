@@ -1,9 +1,12 @@
 package br.com.dae.appos;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,7 +30,7 @@ public class CadastroTipoServicoActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        getSupportActionBar().setTitle("Cadastrar Tipo Serviço");
+        // getSupportActionBar().setTitle("Cadastrar Tipo Serviço");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
@@ -43,10 +46,17 @@ public class CadastroTipoServicoActivity extends AppCompatActivity {
         btnPoliform = (Button) findViewById(R.id.btn_Poliform_TipoServico);
 
 
-        if (editarTipoServico != null){
-            btnPoliform.setText("Modificar Tipo Serviço");
+        if (editarTipoServico != null) {
+            getSupportActionBar().setTitle("Alterar Tipo Serviço");
+            btnPoliform.setText("Alterar Tipo Serviço");
+
+            edtNome.setText(editarTipoServico.getNome());
+            edtDescricao.setText(editarTipoServico.getDescricao());
+
+            tipoServico.setId(editarTipoServico.getId());
         } else {
-            btnPoliform.setText("Cadastrar Novo Tipo Serviço");
+            getSupportActionBar().setTitle("Cadastrar Tipo Serviço");
+            btnPoliform.setText("Cadastrar novo Tipo Serviço");
         }
 
         btnPoliform.setOnClickListener(new View.OnClickListener() {
@@ -55,18 +65,31 @@ public class CadastroTipoServicoActivity extends AppCompatActivity {
                 tipoServico.setNome(edtNome.getText().toString());
                 tipoServico.setDescricao(edtDescricao.getText().toString());
 
-                if(btnPoliform.getText().toString().equals("Cadastrar Novo Tipo Serviço")){
+                if (btnPoliform.getText().toString().equals("Cadastrar novo Tipo Serviço")) {
                     tipoServicoDAO.salvarTipoServico(tipoServico);
                     tipoServicoDAO.close();
-                    Intent i = new Intent(CadastroTipoServicoActivity.this, ListarTipoServicoActivity.class);
-                    startActivity(i);
-                    finish();
                     Util.showMsgToast(CadastroTipoServicoActivity.this, "Tipo de Serviço salvo com sucesso!");
                 } else {
                     tipoServicoDAO.close();
                     tipoServicoDAO.alterarTipoServico(tipoServico);
+                    Util.showMsgToast(CadastroTipoServicoActivity.this, "Tipo de Serviço modificado com sucesso!");
                 }
+                Intent i = new Intent(CadastroTipoServicoActivity.this, ListarTipoServicoActivity.class);
+                startActivity(i);
+                finish();
             }
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                Intent intent = new Intent(CadastroTipoServicoActivity.this, ListarTipoServicoActivity.class);
+                startActivity(intent);
+                break;
+        }
+        return true;
     }
 }

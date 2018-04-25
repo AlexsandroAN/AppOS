@@ -15,6 +15,7 @@ import android.widget.EditText;
 public class MainActivity extends AppCompatActivity {
 
     private Button btnListarClientes;
+    private Button btnListarTipoServico;
 
 
     @Override
@@ -24,19 +25,29 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        getSupportActionBar().setTitle("Ordem de Serviço");
+        getSupportActionBar().setTitle("App Ordem de Serviço");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
 
-        btnListarClientes = (Button) findViewById(R.id.btnListaClientes);
+       // btnListarClientes = (Button) findViewById(R.id.btnListaClientes);
+        btnListarTipoServico = (Button) findViewById(R.id.btnListaTipoSercivo);
 
-        btnListarClientes.setOnClickListener(new View.OnClickListener() {
+//        btnListarClientes.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(MainActivity.this, ListarClientesActivity.class);
+//                startActivity(intent);
+//                // finish();
+//            }
+//        });
+
+        btnListarTipoServico.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, ListarClientesActivity.class);
+                Intent intent = new Intent(MainActivity.this, ListarTipoServicoActivity.class);
                 startActivity(intent);
-               // finish();
+                // finish();
             }
         });
 
