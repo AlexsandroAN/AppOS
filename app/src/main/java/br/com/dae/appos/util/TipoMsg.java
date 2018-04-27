@@ -1,15 +1,12 @@
-package br.com.dae.appos.util;
+package br.com.dae.appos.Util;
 
 /**
- * Created by 39091 on 01/07/2016.
+ * Created by 39091 on 24/04/2018.
  */
-public enum TipoMsg {
 
+public enum TipoMsg {
     ERROR,
     INFO,
     SUCESSO,
     ALERTA;
-
 }
-
-

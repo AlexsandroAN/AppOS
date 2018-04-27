@@ -1,4 +1,4 @@
-package br.com.dae.appos.util;
+package br.com.dae.appos.Util;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -11,11 +11,12 @@ import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import br.com.alex.lojavirtual.R;
+import br.com.dae.appos.R;
 
 /**
- * Created by 39091 on 30/06/2016.
+ * Created by 39091 on 24/04/2018.
  */
+
 public class Util {
 
     public static void showMsgToast(Activity activity, String msg) {
@@ -121,4 +122,3 @@ public class Util {
         alertDialog.getWindow().setAttributes(params);
     }
 }
-
