@@ -181,12 +181,11 @@ public class ListarTipoServicoActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.menuPesquisa) {
-            return true;
-        }
         switch (item.getItemId()) {
-            case R.id.menuSair:
+            case android.R.id.home:
                 finish();
+                Intent intent = new Intent(ListarTipoServicoActivity.this, MainActivity.class);
+                startActivity(intent);
                 break;
         }
         return true;
